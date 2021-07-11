@@ -75,13 +75,12 @@ const listImg = galleryItems.map(images => {
 });
 
 function imageItem(event) {
-    window.addEventListener('keyup', keyPressed);
     const url = event.target;
     if (event.currentTarget === event.target) {
         return;
     }
     event.preventDefault();
-    event.returnValue = false;
+    window.addEventListener('keyup', keyPressed);
     openMdl.classList.add('is-open');
     imageUrl.src = url.dataset.source;
     imageUrl.alt = url.alt;
