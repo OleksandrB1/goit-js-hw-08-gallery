@@ -63,3 +63,44 @@ const galleryItems = [
         description: 'Lighthouse Coast Sea',
     },
 ];
+
+const createList = document.querySelector('ul');
+const closeMdl = document.querySelector('button[data-action="close-lightbox"]');
+const openMdl = document.querySelector('.lightbox');
+const imageUrl = document.querySelector('.lightbox__image');
+const modal = document.querySelector('.lightbox__overlay');
+const listImg = galleryItems.map(images => {
+    const { preview, original, description } = images;
+    return `<li class="gallery__item"><a class="gallery__link" href="${original}"><img class="gallery__image" src="${preview}" data-source="${original}" alt="${description}"/></a></li>`;
+});
+
+function imageItem(event) {
+    window.addEventListener('keyup', keyPressed);
+    const url = event.target;
+    if (event.currentTarget === event.target) {
+        return;
+    }
+    event.preventDefault();
+    event.returnValue = false;
+    openMdl.classList.add('is-open');
+    imageUrl.src = url.dataset.source;
+    imageUrl.alt = url.alt;
+};
+function closeModal() {
+    openMdl.classList.remove('is-open');
+    imageUrl.src = "";
+    imageUrl.alt = "";
+    window.removeEventListener('keyup', keyPressed);
+};
+function keyPressed(key) {
+    if (key.code === "Escape") closeModal();
+    // if (key.code === "ArrowLeft") keyLeft();
+    // if (key.code === "ArrowRight") keyRight();
+};
+// function keyLeft() { };
+// function keyRight() { };
+
+createList.insertAdjacentHTML('afterbegin', listImg.join(""));
+createList.addEventListener('click', imageItem);
+closeMdl.addEventListener('click', closeModal);
+modal.addEventListener('click', closeModal);
